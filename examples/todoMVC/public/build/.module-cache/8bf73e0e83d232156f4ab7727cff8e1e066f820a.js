@@ -1,5 +1,5 @@
 //Inputbox
-var InputBox = React.createClass({
+var InputBox = React.createClass({displayName: "InputBox",
 	handleAddItem:function(e){
 		
 		var itemvalue = this.refs.itemNew.value;
@@ -9,49 +9,49 @@ var InputBox = React.createClass({
 	render:function(){
 
 		return (
-				<div>
-					<input type="text" placeholder="new task..." ref="itemNew" />
-					<button onClick={this.handleAddItem}>Add</button>
-				</div>
+				React.createElement("div", null, 
+					React.createElement("input", {type: "text", placeholder: "new task...", ref: "itemNew"}), 
+					React.createElement("button", {onClick: this.handleAddItem}, "Add")
+				)
 			)
 	}
 })
 //Items
-var ItemTask = React.createClass({
+var ItemTask = React.createClass({displayName: "ItemTask",
 
 	//checked function
 
 	render:function(){
 
 		return (
-				<li class={this.props.done}>
-					<input type="checkbox" />
-					<span>{this.props.name}</span>
+				React.createElement("li", {class: this.props.done}, 
+					React.createElement("input", {type: "checkbox"}), 
+					React.createElement("span", null, this.props.name)
 
-				</li>
+				)
 			)
 	}
 })
 
-var ItemCollection = React.createClass({
+var ItemCollection = React.createClass({displayName: "ItemCollection",
 
 	render:function(){
 		var items = this.props.data.map(function(item){
 			return (
-					<ItemTask name={item.name} class={item.done} />
+					React.createElement(ItemTask, {name: item.name, class: item.done})
 					
 				)
 		})
 
 		return (
-				<ul>
-					{items}
-				</ul>
+				React.createElement("ul", null, 
+					items
+				)
 			)
 	}
 })
 
-var TodoMVC = React.createClass({
+var TodoMVC = React.createClass({displayName: "TodoMVC",
 	getInitialState:function(){
 		return {data:[]};
 	},
@@ -78,7 +78,7 @@ var TodoMVC = React.createClass({
 			method:"POST",
 			dataType:'JSON',
 			data:item,
-			success:function(data){
+			success:function(){
 				this.setState({data:data});
 			}.bind(this)
 		})
@@ -94,17 +94,17 @@ var TodoMVC = React.createClass({
 	render:function(){
 		
 		return(
-				<div>
-					<InputBox onAddItem = {this.addItem} />
-					<ItemCollection data={this.state.data}/>
-					</div>
+				React.createElement("div", null, 
+					React.createElement(InputBox, {onAddItem: this.addItem}), 
+					React.createElement(ItemCollection, {data: this.state.data})
+					)
 				
 			)
 	}
 })
 
 ReactDOM.render(
-		<TodoMVC url="api/comments" pollInterval={5000}/>,
+		React.createElement(TodoMVC, {url: "api/comments", pollInterval: 5000}),
 		document.getElementById('main')
 
 	);

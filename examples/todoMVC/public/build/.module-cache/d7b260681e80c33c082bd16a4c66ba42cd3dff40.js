@@ -77,10 +77,7 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 			url:this.props.url,
 			method:"POST",
 			dataType:'JSON',
-			data:item,
-			success:function(data){
-				this.setState({data:data});
-			}.bind(this)
+			data:item
 		})
 
 	},
@@ -104,7 +101,7 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 })
 
 ReactDOM.render(
-		React.createElement(TodoMVC, {url: "api/comments", pollInterval: 5000}),
+		React.createElement(TodoMVC, {url: "api/comments", pollInterval: 2000}),
 		document.getElementById('main')
 
 	);

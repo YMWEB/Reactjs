@@ -59,6 +59,10 @@ app.post('/api/comments', function(req, res) {
       id: Date.now(),
       author: req.body.author,
       text: req.body.text,
+      name:req.body.name,
+      done:req.body.done,
+      name:req.body.name
+
     };
     comments.push(newComment);
     fs.writeFile(COMMENTS_FILE, JSON.stringify(comments, null, 4), function(err) {
@@ -71,6 +75,33 @@ app.post('/api/comments', function(req, res) {
   });
 });
 
+app.delete('/api/comments/:name',function(req,res){
+    
+    fs.readFile(COMMENTS_FILE,function(err,data){
+      if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+     var comments = JSON.parse(data);
+    
+    for(i=0;i<comments.length;i++){
+        if (comments[i].name ==req.param('name')){
+          console.log(req.param('name'));
+          comments.splice(i,1);
+          break;
+        }
+    }
+    fs.writeFile(COMMENTS_FILE,JSON.stringify(comments,null,4),function(err){
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(comments);
+    
+    })
+   })
+
+})
 
 app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port') + '/');

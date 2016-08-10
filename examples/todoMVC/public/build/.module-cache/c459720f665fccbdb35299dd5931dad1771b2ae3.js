@@ -77,17 +77,14 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 			url:this.props.url,
 			method:"POST",
 			dataType:'JSON',
-			data:item,
-			success:function(data){
-				this.setState({data:data});
-			}.bind(this)
+			data:item
 		})
 
 	},
 
 	componentDidMount:function(){
 		this.loadFromServer();
-		// setInterval(this.loadFromServer, this.props.pollInterval);
+		setInterval(this.loadFromServer, this.props.pollInterval);
 	},
 
 

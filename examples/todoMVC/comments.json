@@ -3,12 +3,24 @@
         "id": 3,
         "name": "task one",
         "text": "step one",
-        "done":"falseClass"
+        "done": "falseClass"
     },
     {
         "id": 2,
         "name": "task two",
         "text": "step two",
-        "done":"falseClass"
+        "done": "falseClass"
+    },
+    {
+        "id": 1470817206746,
+        "text": "manage books",
+        "name": "managebooks",
+        "done": "falseClass"
+    },
+    {
+        "id": 1470817229202,
+        "text": "update books",
+        "name": "updatebooks",
+        "done": "falseClass"
     }
 ]

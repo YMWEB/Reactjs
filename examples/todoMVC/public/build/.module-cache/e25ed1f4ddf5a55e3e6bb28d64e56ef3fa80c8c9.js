@@ -77,22 +77,14 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 			url:this.props.url,
 			method:"POST",
 			dataType:'JSON',
-			data:item,
-			success:function(data){
-				this.setState({data:data});
-			}.bind(this)
+			data:item
 		})
 
 	},
 
-	componentDidMount:function(){
-		this.loadFromServer();
-		// setInterval(this.loadFromServer, this.props.pollInterval);
-	},
-
 
 	render:function(){
-		
+		this.loadFromServer();
 		return(
 				React.createElement("div", null, 
 					React.createElement(InputBox, {onAddItem: this.addItem}), 
@@ -104,7 +96,7 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 })
 
 ReactDOM.render(
-		React.createElement(TodoMVC, {url: "api/comments", pollInterval: 5000}),
+		React.createElement(TodoMVC, {url: "api/comments"}),
 		document.getElementById('main')
 
 	);

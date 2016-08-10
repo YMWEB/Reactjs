@@ -1,9 +1,8 @@
 //Inputbox
 var InputBox = React.createClass({displayName: "InputBox",
 	handleAddItem:function(e){
-		
-		var itemvalue = this.refs.itemNew.value;
-		this.props.onAddItem({"name":itemvalue,"text":itemvalue,"done":"falseClass"});
+		e.preventDefault();
+		this.props.onAddItem({"name":this.refs.itemNew.value});
 	},
 
 	render:function(){
@@ -71,28 +70,20 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 
 
 	//sendAjax
-	addItem:function(item){
+	addItem:function(newitem){
 		
 		$.ajax({
 			url:this.props.url,
 			method:"POST",
 			dataType:'JSON',
-			data:item,
-			success:function(data){
-				this.setState({data:data});
-			}.bind(this)
+			data:newitem
 		})
 
 	},
 
-	componentDidMount:function(){
-		this.loadFromServer();
-		// setInterval(this.loadFromServer, this.props.pollInterval);
-	},
-
 
 	render:function(){
-		
+		this.loadFromServer();
 		return(
 				React.createElement("div", null, 
 					React.createElement(InputBox, {onAddItem: this.addItem}), 
@@ -104,7 +95,7 @@ var TodoMVC = React.createClass({displayName: "TodoMVC",
 })
 
 ReactDOM.render(
-		React.createElement(TodoMVC, {url: "api/comments", pollInterval: 5000}),
+		React.createElement(TodoMVC, {url: "api/comments"}),
 		document.getElementById('main')
 
 	);
