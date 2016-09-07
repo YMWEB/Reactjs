@@ -20,13 +20,20 @@ var InputBox = React.createClass({
 var ItemTask = React.createClass({
 
 	//checked function
+	//
+	//handleDelete
+	handleDelete:function(){
+		this.props.onDelItems({"name":this.ref.itemName});
+
+	},
 
 	render:function(){
 
 		return (
 				<li class={this.props.done}>
 					<input type="checkbox" />
-					<span>{this.props.name}</span>
+					<span ref="itemName">{this.props.name}</span>
+					<span><button onClick={this.handleDelete}>Delete</button></span>
 
 				</li>
 			)
@@ -34,11 +41,17 @@ var ItemTask = React.createClass({
 })
 
 var ItemCollection = React.createClass({
+	deleteItem:function(){
+
+		this.props.ondelitem({"name":this.ref.itemName})
+
+	},
+
 
 	render:function(){
 		var items = this.props.data.map(function(item){
 			return (
-					<ItemTask name={item.name} class={item.done} />
+					<ItemTask name={item.name} class={item.done} onDelItems = {this.deleteItem} />
 					
 				)
 		})
@@ -70,7 +83,7 @@ var TodoMVC = React.createClass({
 	
 
 
-	//sendAjax
+	//additem
 	addItem:function(item){
 		
 		$.ajax({
@@ -85,6 +98,19 @@ var TodoMVC = React.createClass({
 
 	},
 
+	//delete item
+	delItem:function(item){
+		$.ajax({
+			url:this.props.url,
+			method:"Delete",
+			dataType:'JSON',
+			data:item,
+			success:function(data){
+				this.setState({data:data});
+			}.bind(this)
+		})
+	},
+
 	componentDidMount:function(){
 		this.loadFromServer();
 		// setInterval(this.loadFromServer, this.props.pollInterval);
@@ -96,7 +122,7 @@ var TodoMVC = React.createClass({
 		return(
 				<div>
 					<InputBox onAddItem = {this.addItem} />
-					<ItemCollection data={this.state.data}/>
+					<ItemCollection data={this.state.data} ondelItem={this.delItem}/>
 					</div>
 				
 			)

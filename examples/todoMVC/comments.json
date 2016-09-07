@@ -2,13 +2,13 @@
     {
         "id": 3,
         "name": "task one",
-        "text": "step one",
+        "text": "stepone",
         "done": "falseClass"
     },
     {
         "id": 2,
         "name": "task two",
-        "text": "step two",
+        "text": "steptwo",
         "done": "falseClass"
     },
     {
